@@ -7,5 +7,5 @@
 - User should be able to mark a todo as completed.
 - Should pass all provided test cases.
 
-## Bonus
+### Bonus
 - Add the ability to sort the todo list based on priority.
