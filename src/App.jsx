@@ -1,11 +1,87 @@
 import React, { Component } from 'react';
+import ToDo from './components/ToDo';
+import AddToDo from './components/AddToDo';
+import EditToDo from './components/EditToDo';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
+    this.state = { 
+        todo: '',
+        priority: 'none',
+        editEnabled: false,
+        isComplete: false,
+      todos : []
     }
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.handleRemove = this.handleRemove.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.markComplete = this.markComplete.bind(this);
+  }
+
+  handleOnChange(event) {
+    this.setState({
+        [event.target.id] : event.target.value
+  })
+}
+
+  handleAdd(){
+    let object = {
+      todo: this.state.todo,
+      priority: this.state.priority,
+      editEnabled: this.state.editEnabled,
+      isComplete: this.state.isComplete
+    }
+    this.state.todos.push(object);
+    this.state.todos.sort((a, b) => (a.priority > b.priority ? 1 : -1));
+    this.setState({
+      todo: '',
+      priority: 'none',
+    });
+  }
+
+  markComplete(i){
+    let items = [...this.state.todos];
+    let item = items[i];
+    item.isComplete = !item.isComplete;
+    this.setState({
+      todos: items
+    });
+  }
+
+  handleEdit(i){
+    let items = [...this.state.todos];
+    let item = items[i];
+    item.editEnabled = true;
+    this.setState({
+      todos: items
+    });
+  }
+
+  handleUpdate(i){
+    let items = [...this.state.todos];
+    let item = items[i];
+    item.editEnabled = false;
+    item.isComplete = false;
+    item.todo = this.state.todo;
+    item.priority = this.state.priority;
+    
+    this.setState({
+      todo: '',
+      priority: 'none',
+      todos: items.sort((a, b) => (a.priority > b.priority ? 1 : -1))
+    });
+    
+  }
+
+  handleRemove(i){
+    let items = [...this.state.todos]; // make a copy of the array, to not change state directly
+      items.splice(i, 1);
+      this.setState({
+        todos : items
+      });
   }
 
   render() {
@@ -18,42 +94,48 @@ class App extends Component {
         </div>
 
         <div className='row'>
-          <div className='col-sm-4'>
-            <div className='card'>
-            <div className='card-header'>
-              Add New Todo
-            </div>
-            <div className='card-body'>
-            
-                  <label htmlFor='todo' className='control-label'><b>I want to...</b></label>
-                  <textarea id='todo' name='todo' className='create-todo-text form-text' value={this.state.amountDue} onChange={this.handleOnChange}></textarea>
-                
+          <AddToDo 
+                 todo={this.state.todo}
+                 priority={this.state.priority}
+                 handleOnChange={this.handleOnChange}
+                 handleAdd={this.handleAdd} 
+                 />
 
-                  <label htmlFor='priority' className='control-label'><b>How much of a priority is this?</b></label><br/>
-                  <select id='priority' name='priority' className='create-todo-priority form-select' value={this.state.priority} onChange={this.handleOnChange}>
-                    <option value='none' selected disabled hidden>Select a Priority</option>
-                    <option value='1'>High</option>
-                    <option value='2'>Medium</option>
-                    <option value='3'>Low</option>
-                  </select>
-                </div>
-              <div className='card-footer'>
-
-                  <div className="d-grid gap-2">
-                    <button type='button' className='btn btn-success' onClick={this.handleOnClick}>Add</button>
-                  </div>
-                  
-              </div>
-              </div>
-            </div>
             <div className='col-sm-8'>
               <div className='card '>
                 <div className='card-header'>
-                  View Todos
+                  <h4 className='card-title'>View Todos</h4>
                 </div>
-                <div className='card-body bg-info'>
-                  <b>Welcome to Very Simple Todo App!</b><br />
-                  Get started now by adding a new todo on the left.
+
+                <div className='todo-list card-body'>
+                {this.state.todos.length == 0
+                  ? <p><b>Welcome to Very Simple Todo App</b><br/>
+                    Get started now by adding a new todo on the left</p>
+                  : this.state.todos.map((todo, i) => (
+                    todo.editEnabled ? 
+                        <EditToDo 
+                        key={i}
+                        index={i}
+                        name={this.state.todo}
+                        editname={this.state.todos[i].todo}
+                        priority={this.state.priority}
+                        handleOnChange={this.handleOnChange}
+                        update={this.handleUpdate}
+                        />
+                          :
+                          <ToDo
+                          key={i}
+                          index={i}
+                          name={todo.todo}
+                          priority={todo.priority}
+                          editEnabled={todo.editEnabled}
+                          isComplete={todo.isComplete}
+                          edit={this.handleEdit}
+                          remove={this.handleRemove}
+                          complete={this.markComplete}
+                          />
+          ))
+        }
                 </div>
               </div>
             </div>
@@ -63,5 +145,8 @@ class App extends Component {
     );
   }
 }
+                   
+
+
 
 export default App;

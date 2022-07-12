@@ -17,8 +17,10 @@ body {
   color: white !important;
 }
 
-.strike-through {
+.complete {
   text-decoration: line-through;
+  color: silver;
+  background-color:#F7F7F7;
 }
 
 textarea {
@@ -34,8 +36,35 @@ strong + small {
 
 input[type=checkbox] {
   margin-right: 1em;
+  align-self: center;
 }
 
-div.pull-right a {
-  margin-left: 1em;
+
+.todo {
+  border: 1px solid silver;
+  border-radius: 5px;
+  margin-bottom: 3px;
+  padding: 5px;
+}
+
+.todo-list > li {
+  list-style-type: none;
+}
+
+.todo-name {
+  text-align: left;
+  margin: 0em 0em 0em 1em;
+}
+
+.todo-title {
+  cursor: pointer;
+}
+
+.todo-icons {
+  float: right;
+}
+
+.todo-icons > a {
+  margin-right: 2em;
+  cursor: pointer;
 }
