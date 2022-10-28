@@ -1,7 +1,7 @@
 {
   "name": "vstda",
   "version": "0.1.0",
-  "description": "REACT100 Assignment - VSTDA",
+  "description": "Very Simple To Do App",
   "main": "server/index.js",
   "scripts": {
     "build": "npm run less && webpack",
@@ -9,6 +9,10 @@
     "less": "lessc src/css/style.less dist/css/style.css",
     "lint": "eslint .",
     "test": "npm run build && mocha test/.setup.js test/*.spec.js --exit"
+  },
+  "engines": {
+    "node": "14.x.x",
+    "npm": "6.14.15"
   },
   "dependencies": {
     "axios": "^0.16.1",
