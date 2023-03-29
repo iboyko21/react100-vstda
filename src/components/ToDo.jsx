@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 const ToDo = (props) => 
     !props.isComplete ? 
     <li className='todo success' 
@@ -25,7 +23,5 @@ const ToDo = (props) =>
                 </span>
         </div>
     </li>
-
-
 
 export default ToDo;

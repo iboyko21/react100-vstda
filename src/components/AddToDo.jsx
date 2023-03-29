@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 const AddToDo = (props) => 
     <div className='col-sm-4'>
         <div className='card'>
@@ -29,7 +27,5 @@ const AddToDo = (props) =>
       </div>
       </div>
     </div>
-
-
 
 export default AddToDo;

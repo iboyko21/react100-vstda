@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 const EditToDo = (props) => 
     <div className="card">
         <div className="card-header" style={{ 
@@ -24,7 +22,5 @@ const EditToDo = (props) =>
                     <button className="update-todo btn btn-success" onClick={() => props.update(props.index)}>Update</button>
                 </div>
         </div>
-
-
 
 export default EditToDo;
